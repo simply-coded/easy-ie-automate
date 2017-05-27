@@ -4,8 +4,6 @@
 ' @date 01/26/2017
 ' @description
 '  Makes automating Internet Explorer easier.
-' @tutorial
-'  http://link.here/
 '
 
 '''

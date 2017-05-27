@@ -1,55 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            html,
-            body {
-                margin: 20px;
-                padding: 0;
-                background-color: #222;
-                color: white;
-            }
-            .heading {
-                font-size: 18pt;
-                margin: 20px 0;
-                border-bottom: 2px solid;
-            }
-            iframe {
-                width: 90%;
-                height: 700px;
-            }
-        </style>
-    </head>
-    <body>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        html,
+        body {
+            margin: 20px;
+            padding: 0;
+            background-color: #eee;
+            color: black;
+        }
+
+        iframe {
+            width: 100%;
+            border: none;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Automation Practice Page</h2>
+    <div class="w3-container w3-card w3-padding">
+        <div class="w3-bar w3-light-grey">
+            <a href="#" class="w3-bar-item w3-button">Home</a>
+            <div class="w3-dropdown-hover">
+                <button class="w3-button">Dropdown</button>
+                <div class="w3-dropdown-content w3-bar-block w3-card-4">
+                    <a href="#" class="w3-bar-item w3-button">Link 1</a>
+                    <a href="./inner.html" class="w3-bar-item w3-button">Link 2</a>
+                    <a href="#" class="w3-bar-item w3-button">Link 3</a>
+                </div>
+            </div>
+        </div>
     
-        <form id="form-id">
-            <div class="heading">Insert Text :</div>
-            <label>Username</label>
-            <input id="user" name="username" type="text">
-            <label>Password</label>
-            <input name="password" type="password">
-            <br><br>
-            <input type="checkbox" name="saveinfo" value="remember">Remember?
-            <div class="heading">Select Radio :</div>
-            <input type="radio" name="gender" value="male">Male
-            <input type="radio" name="gender" value="female">Female
-            
-            <div class="heading">Select DropDown :</div>
-            <select id="animal">
-                <option value="bear">Bear</option>
-                <option value="dog">Dog</option>
-                <option value="fish">Fish</option>
-            </select>
-            <br><br><br>
-            <input type="submit">
-        </form>
+    </div>
+    <form class="w3-container w3-card-4">
+        <br>
+        <p>
+            <label class="w3-text-grey">Name</label>
+            <input class="w3-input w3-border" type="text" id="user" required="">
+        </p>
+        <p>
+            <label class="w3-text-grey">Email</label>
+            <input class="w3-input w3-border" id="email" type="text" required="">
+        </p>
+        <p>
+            <label class="w3-text-grey">Password</label>
+            <input class="w3-input w3-border" id="pass" type="password"></textarea>
+        </p>
+        <br>
+        <div class="w3-row">
+            <div class="w3-half">
+                <input id="milk" class="w3-check" type="checkbox" checked="checked">
+                <label>Milk</label>
+                <br>
+                <input id="sugar" class="w3-check" type="checkbox">
+                <label>Sugar</label>
+                <br>
+                <input id="lemon" class="w3-check" type="checkbox" disabled="">
+                <label>Lemon (Disabled)</label>
+                <br><br>
+            </div>
 
-        <div class="heading">Go Into iFrame :</div>
+            <div class="w3-half">
+                <input id="male" class="w3-radio" type="radio" name="gender" value="male" checked="">
+                <label>Male</label>
+                <br>
+                <input id="female" class="w3-radio" type="radio" name="gender" value="female">
+                <label>Female</label>
+                <br>
+            </div>
+        </div>
+        <p><input type="submit" value="Send &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px"></p>
+    </form>
+    <h2>Inside of a frame.</h2>
+    <iframe class="w3-card" id="icecream" src="./inner.html"></iframe>
 
-        <iframe id="frame-id" src="./inner.html"></iframe>
+</body>
 
-    </body>
 </html>

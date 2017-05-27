@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html,
+            body {
+                margin: 20px;
+                padding: 0;
+                background-color: #222;
+                color: white;
+            }
+            .heading {
+                font-size: 18pt;
+                margin: 20px 0;
+                border-bottom: 2px solid;
+            }
+        </style>
+    </head>
+    <body>
+    
+        <form id="form-id">
+            <div class="heading">Insert Text :</div>
+            <label>Username</label>
+            <input id="user" name="username" type="text">
+            <label>Password</label>
+            <input id="pass" name="password" type="password">
+            <br><br>
+            <input type="checkbox" name="saveinfo" value="remember">Remember?
+            <div class="heading">Select Radio :</div>
+            <input type="radio" name="gender" value="male">Male
+            <input type="radio" name="gender" value="female">Female
+            
+            <div class="heading">Select DropDown :</div>
+            <select id="animal">
+                <option value="bear">Bear</option>
+                <option value="dog">Dog</option>
+                <option value="fish">Fish</option>
+            </select>
+            <br><br><br>
+            <input type="submit">
+        </form>
+
+    </body>
+</html>

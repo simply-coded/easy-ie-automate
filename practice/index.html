@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title></title>
+    <title>Automation Practice | Home</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -20,26 +20,34 @@
             border: none;
             height: 400px;
         }
+
+        div.bmargin {
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 
-    <h2>Automation Practice Page</h2>
-    <div class="w3-container w3-card w3-padding">
+    <h1>Automation Practice Page</h1>
+    <div class="w3-container w3-card w3-padding bmargin">
         <div class="w3-bar w3-light-grey">
-            <a href="#" class="w3-bar-item w3-button">Home</a>
+            <a href="./index.html" class="w3-bar-item w3-button">Home</a>
             <div class="w3-dropdown-hover">
                 <button class="w3-button">Dropdown</button>
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                    <a href="#" class="w3-bar-item w3-button">Link 1</a>
-                    <a href="./inner.html" class="w3-bar-item w3-button">Link 2</a>
-                    <a href="#" class="w3-bar-item w3-button">Link 3</a>
+                    <a href="#" class="w3-bar-item w3-button">Pointless Link 1</a>
+                    <a href="#" class="w3-bar-item w3-button">Pointless Link 2</a>
+                    <a href="./more.html" class="w3-bar-item w3-button">Tell Us More</a>
                 </div>
             </div>
         </div>
-    
     </div>
+    <h2>Regular Form</h2>
     <form class="w3-container w3-card-4">
         <br>
         <p>
@@ -63,13 +71,13 @@
                 <input id="sugar" class="w3-check" type="checkbox">
                 <label>Sugar</label>
                 <br>
-                <input id="lemon" class="w3-check" type="checkbox" disabled="">
-                <label>Lemon (Disabled)</label>
+                <input id="lemon" class="w3-check" type="checkbox">
+                <label>Lemon</label>
                 <br><br>
             </div>
 
             <div class="w3-half">
-                <input id="male" class="w3-radio" type="radio" name="gender" value="male" checked="">
+                <input id="male" class="w3-radio" type="radio" name="gender" value="male">
                 <label>Male</label>
                 <br>
                 <input id="female" class="w3-radio" type="radio" name="gender" value="female">
@@ -79,8 +87,8 @@
         </div>
         <p><input type="submit" value="Send &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px"></p>
     </form>
-    <h2>Inside of a frame.</h2>
-    <iframe class="w3-card" id="icecream" src="./inner.html"></iframe>
+    <h2>Inside an iFrame</h2>
+    <iframe class="w3-container w3-card-4" id="icecream" src="./inner.html"></iframe>
 
 </body>
 

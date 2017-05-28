@@ -19,19 +19,28 @@
 
 <body>
 
-    <form>
+    <form action="" onsubmit="return false" name="frame_form">
         <br>
         <h2>Favorite Icecream?</h2>
         <select class="w3-input">
             <option selected="true" disabled="true">choose a flavor...</option>
-            <option value="vanilla">Vanilla</option>
-            <option value="chocolate">Chocolate</option>
-            <option value="mint">Mint</option>
-            <option value="cookies-cream">Cookies & Cream</option>
+            <option value="vanilla" name="flavor">Vanilla</option>
+            <option value="chocolate" name="flavor">Chocolate</option>
+            <option value="mint" name="flavor">Mint</option>
+            <option value="cookies-cream" name="flavor">Cookies & Cream</option>
         </select>
-        <p><input type="submit" value="Submit &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px"></p>
+        <p><input type="submit" value="Save &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px" onclick="display()"></p>
+        <p id="confirmation" style="color:green;"></p>
     </form>
 
+    <script>
+        function display() {
+            document.getElementById("confirmation").innerHTML = (
+                'SUBMITTED: ' +
+                'selected=' + [].filter.call(document.getElementsByName('flavor'), (c) => c.selected).map(c => c.value)
+            )
+        }
+    </script>
 </body>
 
 </html>

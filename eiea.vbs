@@ -61,11 +61,7 @@ Class EasyIEAutomate
             End If
         Next
         Tabs = list
-	  End Property
-
-    Public Property Let Visible(bool)
-        classIE.Visible = bool
-    End Property
+	  End Property    
     '''
     ' SUBS
     '    
@@ -132,19 +128,7 @@ Class EasyIEAutomate
             End If 
         Next
         Call ErrorOut(Array(classIE.LocationURL, strTag, strText))        
-    End Function
-    
-    Public Function GetElementByID(strID)
-        Call Wait()
-        On Error Resume Next
-        Dim element
-        Set element = classIE.Document.getElementByID(strID)
-        If Err.Number = 0 Then 
-            Set GetElementByID = element
-        Else
-            Call ErrorOut(Array(classIE.LocationURL, strID))        
-        End If
-    End Function
+    End Function      
     
     Public Function Query(strSelector)
         Call Wait()

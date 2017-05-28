@@ -42,36 +42,36 @@
                 <div class="w3-dropdown-content w3-bar-block w3-card-4">
                     <a href="#" class="w3-bar-item w3-button">Pointless Link 1</a>
                     <a href="#" class="w3-bar-item w3-button">Pointless Link 2</a>
-                    <a href="./more.html" class="w3-bar-item w3-button">Tell Us More</a>
+                    <a href="./more.html" target="_blank" class="w3-bar-item w3-button">Tell Us More</a>
                 </div>
             </div>
         </div>
     </div>
     <h2>Regular Form</h2>
-    <form class="w3-container w3-card-4">
+    <form class="w3-container w3-card-4" name="reg_form" action="" onsubmit="return false">
         <br>
         <p>
             <label class="w3-text-grey">Name</label>
-            <input class="w3-input w3-border" type="text" id="user" required="">
+            <input class="w3-input w3-border" type="text" name="name" id="user" required="">
         </p>
         <p>
             <label class="w3-text-grey">Email</label>
-            <input class="w3-input w3-border" id="email" type="text" required="">
+            <input class="w3-input w3-border" type="text" name="email">
         </p>
         <p>
             <label class="w3-text-grey">Password</label>
-            <input class="w3-input w3-border" id="pass" type="password"></textarea>
+            <input class="w3-input w3-border" id="pass" type="password" name="password">
         </p>
         <br>
         <div class="w3-row">
             <div class="w3-half">
-                <input id="milk" class="w3-check" type="checkbox" checked="checked">
+                <input id="milk" class="w3-check" type="checkbox" checked="checked" name="list" value="milk">
                 <label>Milk</label>
                 <br>
-                <input id="sugar" class="w3-check" type="checkbox">
+                <input id="sugar" class="w3-check" type="checkbox" name="list" value="sugar">
                 <label>Sugar</label>
                 <br>
-                <input id="lemon" class="w3-check" type="checkbox">
+                <input id="lemon" class="w3-check" type="checkbox" name="list" value="lemon">
                 <label>Lemon</label>
                 <br><br>
             </div>
@@ -85,11 +85,24 @@
                 <br>
             </div>
         </div>
-        <p><input type="submit" value="Send &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px"></p>
+        <p><button class="w3-btn w3-padding w3-teal" style="width:120px" onclick="display()">Send &nbsp; ❯</button></p>
+        <p id="confirmation" style="color:green;"></p>
     </form>
     <h2>Inside an iFrame</h2>
     <iframe class="w3-container w3-card-4" id="icecream" src="./inner.html"></iframe>
 
+    <script>
+        function display() {
+            document.getElementById("confirmation").innerHTML = (
+                'SUBMITTED:' +
+                '  name=' + document.reg_form.name.value +
+                '; email=' + document.reg_form.email.value +
+                '; password=' + document.reg_form.pass.value +
+                '; checkbox=' + [].filter.call(document.getElementsByName('list'), (c) => c.checked).map(c => c.value) +
+                '; radio=' + [].filter.call(document.getElementsByName('gender'), (c) => c.checked).map(c => c.value)
+            )
+        }
+    </script>
 </body>
 
 </html>

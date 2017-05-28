@@ -22,26 +22,23 @@
 </head>
 
 <body>
-    <div class="w3-container w3-card w3-padding bmargin">
-        <div class="w3-bar w3-light-grey">
-            <a href="./index.html" class="w3-bar-item w3-button">Home</a>
-            <div class="w3-dropdown-hover">
-                <button class="w3-button">Dropdown</button>
-                <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                    <a href="#" class="w3-bar-item w3-button">Pointless Link 1</a>
-                    <a href="#" class="w3-bar-item w3-button">Pointless Link 2</a>
-                    <a href="./more.html" class="w3-bar-item w3-button">Tell Us More</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <form class="w3-container w3-card-4">
+
+    <form class="w3-container w3-card-4" onsubmit="return false" name="more_form">
         <br>
         <h2>Tell us about you.</h2>
-        <textarea class="w3-input w3-border" style="resize: none; z-index: auto; position: relative; line-height: 22.5px; font-size: 15px; transition: none; background: transparent !important;"></textarea>
-        <p><input type="submit" value="Submit &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px"></p>
+        <textarea id="tell" class="w3-input w3-border" style="resize: none; z-index: auto; position: relative; line-height: 22.5px; font-size: 15px; transition: none; background: transparent !important;"></textarea>
+        <p><input type="submit" value="Submit &nbsp; ❯" class="w3-btn w3-padding w3-teal" style="width:120px" onclick="display()"></p>
+        <p id="confirmation" style="color:green;"></p>
     </form>
 
+    <script>
+        function display() {
+            document.getElementById("confirmation").innerHTML = (
+                'SUBMITTED: ' +
+                'text=' + document.more_form.tell.value
+            )
+        }
+    </script>
 </body>
 
 </html>

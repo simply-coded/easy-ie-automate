@@ -6,17 +6,16 @@ Dim IE : Set IE = (New EasyIEAutomate)(Null)
 
 'Practice HTML page
 IE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
-
-'Appearance settings
-IE.Base.AddressBar = False
-IE.Base.MenuBar = False
 IE.Base.Visible = True
 
-'Input in data
+'Challenges: One of multiple ways to do this can be found in usage.vbs
+
 '----(1) Task--------------------------------
-IE.Query("#user").Value = "Jeremy"
-IE.Query("input[name=""email""]").Value = "simplycoded.help@gmail.com"
-IE.Query("#pass").Value = "bananas1are2the3universal4scale5"
+        'Input Text - [Name, Email, Password]
+'--------------------------------------------
+
+
+
 
 '----(2) Task--------------------------------
         'Uncheck - [Milk]

@@ -84,7 +84,7 @@ Class EasyIEAutomate
 
     Public Sub DeepWait(frame)                
         While Not (frame.ReadyState = "complete") : WScript.Sleep(400) : Wend        
-    End Function
+    End Sub
 
     Public Sub RePoint(strURL)  
         Dim tab      

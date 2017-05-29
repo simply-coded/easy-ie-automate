@@ -8,7 +8,7 @@ Dim IE : Set IE = (New EasyIEAutomate)(Null)
 IE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
 IE.Base.Visible = True
 
-'Challenges: One of multiple ways to do this can be found in usage.vbs
+'Challenges: One of multiple ways to do this can be found in answers.vbs
 
 '----(1) Task--------------------------------
         'Input Text - [Name, Email, Password]

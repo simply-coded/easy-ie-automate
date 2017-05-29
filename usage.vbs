@@ -42,13 +42,8 @@ End With
 
 iframe.querySelector("input[type='submit']").Click
 
-
-
 '----(5) Task--------------------------------
-        'Select Menu Dropdown Option - [Tell Us More]
-        'Input Text - [Tell us about you.]
-        'Click - [Submit >]
-'--------------------------------------------
-
-
-
+IE.Query("a[href='./more.html']").Click
+IE.RePoint("https://rawgit.com/simply-coded/easy-ie-automate/master/practice/more.html")
+IE.Query("textarea").Value = "I am allergic to butterflies."
+IE.Query("form input").Click

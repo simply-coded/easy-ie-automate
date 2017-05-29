@@ -82,6 +82,10 @@ Class EasyIEAutomate
         While (classIE.Busy) And Not (classIE.ReadyState = 4) : WScript.Sleep(400) : Wend 
     End Sub
 
+    Public Sub DeepWait(frame)                
+        While Not (frame.ReadyState = "complete") : WScript.Sleep(400) : Wend        
+    End Function
+
     Public Sub RePoint(strURL)  
         Dim tab      
         For Each tab in Tabs()
@@ -140,7 +144,20 @@ Class EasyIEAutomate
         Else
             Call ErrorOut(Array(classIE.LocationURL, strSelector))
         End If 
-    End Function 
+    End Function
+
+    Public Function Deeper(strSelector)
+        Call Wait()
+        On Error Resume Next
+        Dim element
+        Set element = classIE.Document.querySelector(strSelector).contentDocument
+        If Err.Number = 0 Then
+            Call DeepWait(element)
+            Set Deeper = element.documentElement
+        Else
+            Call ErrorOut(Array(classIE.LocationURL, strSelector))
+        End If 
+    End Function     
     '''
     ' ERROR HANDLING
     '    

@@ -28,17 +28,19 @@ IE.Query("input[type='radio'][value='female']").setAttribute("checked")
 IE.Query("form > p > button").Click
 
 '----(4) Task--------------------------------
-Set iframe = IE.Query("#ice_frame").contentDocument.documentElement
+Set iframe = IE.Deeper("#ice_frame")
 
-Set selectElem = iframe.querySelector("select")
-For i = 0 To selectElem.options.length - 1
-    If selectElem.options(i).value = "mint" Then
-        selectElem.options(i).selected = true
-    Else
-        selectElem.options(i).selected = false
-    End If
-Next
+With iframe.querySelector("select")
+    For i = 0 To .options.length - 1
+        If .options(i).value = "mint" Then
+            .options(i).selected = true
+        Else
+            .options(i).selected = false
+        End If
+    Next
+End With
 
+iframe.querySelector("input[type='submit']").Click
 
 
 

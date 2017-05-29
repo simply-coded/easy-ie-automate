@@ -37,9 +37,10 @@
         function display() {
             document.getElementById("confirmation").innerHTML = (
                 'SUBMITTED: ' +
-                'selected=' + [].filter.call(document.getElementsByName('flavor'), (c) => c.selected).map(c => c.value)
+                'selected=' + [].filter.call(document.getElementsByName('flavor'), function(c) { return c.selected; }).map(function(c) { return c.value; })
             )
         }
+        
     </script>
 </body>
 

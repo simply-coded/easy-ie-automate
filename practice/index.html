@@ -98,10 +98,10 @@
                 '  name=' + document.reg_form.name.value +
                 '; email=' + document.reg_form.email.value +
                 '; password=' + document.reg_form.pass.value +
-                '; checkbox=' + [].filter.call(document.getElementsByName('list'), (c) => c.checked).map(c => c.value) +
-                '; radio=' + [].filter.call(document.getElementsByName('gender'), (c) => c.checked).map(c => c.value)
+                '; checkbox=' + [].filter.call(document.getElementsByName('list'), function(c) { return c.checked; }).map(function(c) { return c.value; }) +
+                '; radio=' + [].filter.call(document.getElementsByName('gender'), function(c) { return c.checked; }).map(function(c) { return c.value; })
             )
-        }
+        }        
     </script>
 </body>
 

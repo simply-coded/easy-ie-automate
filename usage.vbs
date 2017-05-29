@@ -15,29 +15,29 @@ IE.Base.Visible = True
 'Input in data
 '----(1) Task--------------------------------
 IE.Query("#user").Value = "Jeremy"
-IE.Query("input[name=""email""]").Value = "simplycoded.help@gmail.com"
+IE.Query("input[name='email']").Value = "simplycoded.help@gmail.com"
 IE.Query("#pass").Value = "bananas1are2the3universal4scale5"
 
 '----(2) Task--------------------------------
-        'Uncheck - [Milk]
-        'Check - [Sugar, Lemon]
-        'Select - [Female]
-'--------------------------------------------
-
-
-
+IE.Query("#milk").removeAttribute("checked")
+IE.Query("#sugar").setAttribute("checked")
+IE.Query("#lemon").setAttribute("checked")
+IE.Query("input[type='radio'][value='female']").setAttribute("checked")
 
 '----(3) Task--------------------------------
-        'Click - [Send >]
-'--------------------------------------------
-
-
-
+IE.Query("form > p > button").Click
 
 '----(4) Task--------------------------------
-        'Select Icecream Dropdown Option - [Mint]
-        'Click - [Save >]
-'--------------------------------------------
+Set iframe = IE.Query("#ice_frame").contentDocument.documentElement
+
+Set selectElem = iframe.querySelector("select")
+For i = 0 To selectElem.options.length - 1
+    If selectElem.options(i).value = "mint" Then
+        selectElem.options(i).selected = true
+    Else
+        selectElem.options(i).selected = false
+    End If
+Next
 
 
 

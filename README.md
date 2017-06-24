@@ -43,41 +43,77 @@
 # Usage
 > Now that we've added the class to our VBScript file, let's create an instance of it.  
 
-### Create the EasyIEAutomate Object.
+## Initialization 
 ```vb
-Set IEA = (New EasyIEAutomate)(Null)
-
+Set eIE = New EasyIEAutomate
 
 'your code here
 ```
-* If you already have a window open that you want to use you can use that in place of the *Null* keyword.
+> By default this will **not** create an IE process immediately. The reason for this is so that if you have an existing IE window or tab open you can grab that process instead of creating a new one. Creating or getting an existing window can be achieved in a few ways: **Init()**, **ReBase()**, **RePoint()**, and **Latest()**.  
+
+> Let's see some examples:
+
+* Create new with **Init()**.
 ```vb
-'URL of the IE window that is already open.
-openedIEWindowURL = "https://www.google.com/?gws_rd=ssl"
+' These all do the same thing.
+'1.
+Set eIE = (New EasyIEAutomate)(vbUseDefault) 
 
-'Loop through all windows.
-Set IEA = Nothing
-For Each Window In CreateObject("Shell.Application").Windows
-  If Window.LocationURL = openedIEWindowURL Then
-    Set IEA = (New EasyIEAutomate)(Window)
-    Exit For
-  End If
-Next
+'2.
+Set eIE = (New EasyIEAutomate)(CreateObject("InternetExplorer.Application"))
 
-'If window couldn't be found then quit.
-If IEA Is Nothing Then
-  MsgBox "Couldn't find the Window.",vbCritical 
-  WScript.Quit
-End If
+'3.
+Set eIE = New EasyIEAutomate
+eIE(vbUseDefault)
 
-
-'IEA reference is now set
-'your code here
+'4.
+Set eIE = New EasyIEAutomate
+eIE(CreateObject("InternetExplorer.Application"))
 ```
 
-### All the old *properties* and *methods* can be accessed with  the **Base** Property.
+* Get existing with **Init()**. 
 ```vb
-Set IEA = (New EasyIEAutomate)(Null)
+'Already have the object
+Set objIE = CreateObject("InternetExplorer.Application")
+Set eIE = (New EasyIEAutomate)(objIE)
+```
+
+* Get existing with **ReBase()**. 
+```vb
+'Already have the object
+Set objIE = CreateObject("InternetExplorer.Application")
+Set eIE = New EasyIEAutomate
+eIE.ReBase objIE
+```
+> The method **ReBase()** can be used at anytime to change what IE process the class is controlling and is just an alias for the **Init()** method.
+
+* Get existing with **RePoint()**.
+```vb
+Set eIE = New EasyIEAutomate 
+eIE.RePoint("https://www.google.com/?gws_rd=ssl") 'URL of the IE window that is already open.
+```
+
+* Get existing with **Latest()**.
+```vb
+Set eIE = New EasyIEAutomate 
+eIE.Latest 'Will get the most recent IE process created.
+```
+
+## Auto IE Initialization
+> If you start off with no IE process EasyIEAutomate will automatically create one when you start using the class. A one (1) second Popup of *"Auto initialized a new IE object."* will let you know if it does.
+```vb
+Set eIE = (New EasyIEAutomate)(Nothing)
+' Or just: Set eIE = New EasyIEAutomate 
+
+' This and many other methods and properties will trigger an automatic creation of an IE process.
+eIE.Show 
+```
+
+# Backwards compatibility
+
+> Maybe not the best section title for this, but what I mean by it is that all the IE *properties* and *methods* you're use to can still be accessed through the **Base** Property.
+```vb
+Set IEA = (New EasyIEAutomate)(vbUseDefault)
 
 'Navigate to Google.
 IEA.Base.Navigate "http://www.google.com/"
@@ -103,4 +139,4 @@ IEA.Base.Visible = True
 'Change the title of the window
 IEA.Base.Document.title = "Google Searcher"
 ```
-* All properties and methods can be found [here](https://msdn.microsoft.com/en-us/library/aa752084(v=vs.85).aspx).
+> If all of this looks unfamiliar to you then I would recommend checking out all the main properties and methods [here](https://msdn.microsoft.com/en-us/library/aa752084(v=vs.85).aspx).

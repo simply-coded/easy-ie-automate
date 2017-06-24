@@ -123,7 +123,7 @@ Class EasyIEAutomate
   End Sub
   
   Public Sub ReBase(obj)
-    Set classIE = obj
+    Init(obj)
   End Sub
   
   Public Sub RePoint(strURL)  
@@ -140,8 +140,12 @@ Class EasyIEAutomate
   Public Sub Latest()        
     Dim window
     For Each window In classSHELL.Windows
-      If IsIE(window) Then : Set classIE = window : End If
-    Next                
+      If IsIE(window) Then
+        Set classIE = window 
+        Exit Sub
+      End If
+    Next         
+    Call checkInit()
   End Sub
   
   '''
@@ -188,7 +192,9 @@ Class EasyIEAutomate
   
   Private Sub checkInit()
     If classIE Is Nothing Then
-      With CreateObject("WScript.Shell") : .PopUp "Auto initialized a new IE object.", 1 : End With
+      With CreateObject("WScript.Shell")
+        .PopUp "Auto initialized a new IE object.", 1, "EasyIEAutomate"
+      End With
       Set classIE = CreateObject("InternetExplorer.Application")
     End If 
   End Sub 

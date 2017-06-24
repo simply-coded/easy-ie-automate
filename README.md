@@ -34,9 +34,7 @@
     * Import 
     ```vb   
     Dim eieaPath : eieaPath = "c:\path\to\eiea.vbs"
-    With CreateObject("Scripting.FileSystemObject") : With .OpenTextFile(eieaPath, 1)
-      Execute(.ReadAll)
-    End With : End With
+    Execute(CreateObject("Scripting.FileSystemObject").OpenTextFile(eieaPath, 1).ReadAll)    
 
 
     'your code here...

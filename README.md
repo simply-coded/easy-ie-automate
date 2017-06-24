@@ -50,7 +50,7 @@ Set IEA = (New EasyIEAutomate)(Null)
 
 'your code here
 ```
-* If you already have a window open that you want to use you can use that implace of the *Null* keyword.
+* If you already have a window open that you want to use you can use that in place of the *Null* keyword.
 ```vb
 'URL of the IE window that is already open.
 openedIEWindowURL = "https://www.google.com/?gws_rd=ssl"

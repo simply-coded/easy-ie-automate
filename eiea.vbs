@@ -1,7 +1,7 @@
 '''
 ' @author Jeremy England
 ' @company SimplyCoded
-' @date 01/26/2017
+' @date 06/24/2017
 ' @description
 '  Makes automating Internet Explorer easier.
 '
@@ -10,168 +10,187 @@
 ' INTERNET EXPLORER AUTOMATION CLASS
 '
 Class EasyIEAutomate
-    '''
-    ' OBJECTS
-    '    
-    Private classIE
-    Private classSHELL   
-    '''
-    ' EVENTS
-    '
-    Private Sub Class_Initialize
-        Set classSHELL= CreateObject("Shell.Application")        
-	  End Sub 
-    
-    Private Sub Class_Terminate
-        Set classIE = Nothing
-        Set classSHELL = Nothing
-    End Sub
-
-    Public Default Function Init(objIE)
-        If isnull(objIE) Then
-            Set classIE = CreateObject("InternetExplorer.Application")
-        Else 
-            Set classIE = objIE
-        End If
-        Set Init = Me
-    End Function 
-    '''
-    ' PROPERTIES
-    '
-    Public Property Get Base
-        Set Base = classIE 
-    End Property   
-    
-    Public Property Get URL
-        URL = classIE.LocationURL
-    End Property
-    
-    Public Property Get Title
-        Title = classIE.LocationName
-    End Property    
-        
-    Public Property Get Tabs
-        Call Wait()
-        Dim window, list
-        list = Array()
-        For Each window In classSHELL.Windows
-            If InStr(LCase(window.FullName), "iexplore.exe") Then 
-                ReDim Preserve list(UBound(list) + 1)
-                Set list(UBound(list)) = (New EasyIEAutomate)(window)
-            End If
-        Next
-        Tabs = list
-	  End Property    
-    '''
-    ' SUBS
-    '    
-    Public Sub Close()
-        classIE.Quit()
-    End Sub
-
-    Public Sub CloseAll()
-        Dim window
-        For Each window In classSHELL.Windows
-            If InStr(LCase(window.FullName), "iexplore.exe") Then                                      
-                window.Quit()
-            End If
-        Next 
-    End Sub
-
-    Public Sub Wait()
-        While (classIE.Busy) And Not (classIE.ReadyState = 4) : WScript.Sleep(400) : Wend 
-    End Sub
-
-    Public Sub DeepWait(frame)                
-        While Not (frame.ReadyState = "complete") : WScript.Sleep(400) : Wend        
-    End Sub
-
-    Public Sub RePoint(strURL)  
-        Dim tab      
-        For Each tab in Tabs()
-            tab.Wait()
-            If (LCase(tab.URL) = LCase(strURL)) Then
-                Set classIE = tab.Base
-                Exit Sub
-            End If
-        Next
-        Call ErrorOut(Array("Internet Explorer", strURL))        
-    End Sub
-
-    Public Sub Latest()
-        Call Wait()
-        Dim window
-        For Each window In classSHELL.Windows
-            If InStr(LCase(window.FullName), "iexplore.exe") Then                                       
-                Set classIE = window                
-            End If
-        Next                
-	  End Sub
-    '''
-    ' FUNCTIONS
-    '
-    Public Function Navigate(strURL)
-        classIE.Navigate2 strURL
-    End Function
-    
-    Public Function NavigateT(strURL)
-        classIE.Navigate2 strURL, 2048
-    End Function
-
-    Public Function NavigateBT(strURL)
-        classIE.Navigate2 strURL, 4096
-    End Function
-    
-    Public Function GetElementByTagText(strTag, strText)
-        Call Wait()
-        Dim tag
-        For Each tag In classIE.Document.GetElementsByTagName(strTag)
-            If InStr(LCase(tag.innerText),  LCase(strText)) Then
-                Set GetElementByTagText = tag   
-                Exit Function
-            End If 
-        Next
-        Call ErrorOut(Array(classIE.LocationURL, strTag, strText))        
-    End Function      
-    
-    Public Function Query(strSelector)
-        Call Wait()
-        On Error Resume Next
-        Dim element
-        Set element = classIE.Document.querySelector(strSelector)
-        If Err.Number = 0 Then
-            Set Query = element
-        Else
-            Call ErrorOut(Array(classIE.LocationURL, strSelector))
-        End If 
-    End Function
-
-    Public Function Deeper(strSelector)
-        Call Wait()
-        On Error Resume Next
-        Dim element
-        Set element = classIE.Document.querySelector(strSelector).contentDocument
-        If Err.Number = 0 Then
-            Call DeepWait(element)
-            Set Deeper = element.documentElement
-        Else
-            Call ErrorOut(Array(classIE.LocationURL, strSelector))
-        End If 
-    End Function     
-    '''
-    ' ERROR HANDLING
-    '    
-    Private Sub ErrorOut(args)        
-        If (UBound(args) = 1) Then
-            MsgBox _
-                "CANNOT FIND [ " & args(1) & " ]" & vbLf & _
-                "AT [ " & args(0) & " ]", vbCritical
-        ElseIf (UBound(args) = 2) Then
-            MsgBox _
-                "CANNOT FIND [ " & args(1) & " ]" & vbLf & _
-                "WITH [ " & args(2) & " ]" & vbLf & _
-                "AT [ " & args(0) & " ]", vbCritical
-        End If                
-        WScript.quit
-    End Sub
+  '''
+  ' OBJECTS
+  ' 
+  Private classIE
+  Private classSHELL    
+ 
+  '''
+  ' EVENTS
+  ' 
+  Private Sub Class_Initialize
+    Set classSHELL= CreateObject("Shell.Application") 
+    Set classIE = Nothing
+  End Sub 
+  
+  Private Sub Class_Terminate
+    Set classIE = Nothing
+    Set classSHELL = Nothing
+  End Sub
+  
+  '''
+  ' CONSTRUCTOR
+  '  
+  Public Default Function Init(obj)    
+    If obj Is Nothing Then 'done
+    ElseIf (obj = vbUseDefault) Then
+      Set classIE = CreateObject("InternetExplorer.Application")
+    ElseIf IsObject(obj) Then
+      If IsIE(obj) Then       
+        Set classIE = obj
+      End If
+    End If
+    Set Init = Me
+  End Function 
+     
+  '''
+  ' PROPERTIES
+  '  
+  Public Property Get Avail
+    Dim process, list : list = Array()
+    For Each process In classSHELL.Windows
+      If (Right(LCase(process.FullName), 12) = "iexplore.exe") Then 
+        ReDim Preserve list(UBound(list) + 1)
+        Set list(UBound(list)) = process
+      End If
+    Next
+    Avail = list
+  End Property 
+  
+  Public Property Get Base
+    Call checkInit()
+    Set Base = classIE 
+  End Property   
+  
+  Public Property Get URL
+    Call checkInit()
+    URL = classIE.LocationURL
+  End Property
+  
+  Public Property Get Title
+    Call checkInit()
+    Title = classIE.LocationName
+  End Property
+  
+  '''
+  ' SUBS
+  '       
+  Public Sub Close()
+    Call checkInit()
+    classIE.Quit
+  End Sub
+  
+  Public Sub CloseAll()
+    Dim window
+    For Each window In classSHELL.Windows
+      If IsIE(window) Then : window.Quit : End If
+    Next 
+  End Sub
+  
+  Public Sub Show()
+    Call checkInit()
+    classIE.Visible = True
+  End Sub
+  
+  Public Sub Hide()
+    Call checkInit()
+    classIE.Visible = False
+  End Sub
+  
+  Public Sub Navigate(strURL)
+    Call checkInit()
+    classIE.Navigate2 strURL
+  End Sub
+  
+  Public Sub NavigateT(strURL)
+    Call checkInit()
+    classIE.Navigate2 strURL, 2048
+  End Sub
+  
+  Public Sub NavigateBT(strURL)
+    Call checkInit()
+    classIE.Navigate2 strURL, 4096
+  End Sub
+  
+  Public Sub Wait()
+    Call checkInit()
+    While (classIE.Busy) And Not (classIE.ReadyState = 4) : WScript.Sleep(400) : Wend 
+  End Sub
+  
+  Public Sub DeepWait(frame)                
+    While Not (frame.ReadyState = "complete") : WScript.Sleep(400) : Wend        
+  End Sub
+  
+  Public Sub ReBase(obj)
+    Set classIE = obj
+  End Sub
+  
+  Public Sub RePoint(strURL)  
+    Dim window
+    For Each window in classSHELL.Windows            
+      If IsIE(window) And (LCase(window.LocationURL) = LCase(strURL)) Then             
+        Set classIE = window
+        Exit Sub
+      End If
+    Next
+    Call ErrorOut(strURL, "Internet Explorer")
+  End Sub
+  
+  Public Sub Latest()        
+    Dim window
+    For Each window In classSHELL.Windows
+      If IsIE(window) Then : Set classIE = window : End If
+    Next                
+  End Sub
+  
+  '''
+  ' FUNCTIONS
+  '  
+  Private Function IsIE(obj)    
+    IsIE = CBool(Right(LCase(obj.FullName), 12) = "iexplore.exe")
+  End Function
+  
+  Public Function Query(strSelector)
+    Call Wait()
+    On Error Resume Next
+    Dim element
+    Set element = classIE.Document.querySelector(strSelector)
+    If Err.Number = 0 Then
+      Set Query = element
+    Else
+      Call ErrorOut(strSelector, classIE.LocationURL)
+    End If 
+  End Function
+  
+  Public Function Deeper(strSelector)
+    Call Wait()
+    On Error Resume Next
+    Dim element
+    Set element = classIE.Document.querySelector(strSelector).contentDocument
+    If Err.Number = 0 Then
+      Call DeepWait(element)
+      Set Deeper = element.documentElement
+    Else
+      Call ErrorOut(strSelector, classIE.LocationURL)
+    End If 
+  End Function   
+  
+  '''
+  ' ERROR HANDLING
+  '      
+  Private Sub ErrorOut(item, at)        
+    MsgBox _
+      "CANNOT FIND [ " & item & " ]" & vbLf & _
+      "AT [ " & at & " ]", vbCritical
+    WScript.quit
+  End Sub
+  
+  Private Sub checkInit()
+    If classIE Is Nothing Then
+      With CreateObject("WScript.Shell") : .PopUp "Auto initialized a new IE object.", 1 : End With
+      Set classIE = CreateObject("InternetExplorer.Application")
+    End If 
+  End Sub 
+  
 End Class

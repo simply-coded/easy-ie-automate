@@ -14,19 +14,22 @@ Class EasyIEAutomate
   ' OBJECTS
   ' 
   Private classIE
-  Private classSHELL    
+  Private classWSS  
+  Private classSHELL  
  
   '''
   ' EVENTS
   ' 
   Private Sub Class_Initialize
-    Set classSHELL= CreateObject("Shell.Application") 
     Set classIE = Nothing
+    Set classWSS = CreateObject("WScript.Shell")
+    Set classSHELL = CreateObject("Shell.Application")     
   End Sub 
   
   Private Sub Class_Terminate
     Set classIE = Nothing
-    Set classSHELL = Nothing
+    Set classWSS = Nothing
+    Set classSHELL = Nothing    
   End Sub
   
   '''
@@ -114,6 +117,19 @@ Class EasyIEAutomate
     classIE.Visible = False
   End Sub
   
+  Public Sub Center()        
+    Call WaitForLoad()   
+    On Error Resume Next  
+    With classIE.Document.ParentWindow.screen
+      classIE.Left = (.width - classIE.Width) / 2
+      classIE.Top = (.height - classIE.Height) / 2
+    End With    
+    If Err.Number = 505 Then 
+       Navigate "about:blank"
+       Center()
+    End If
+  End Sub
+  
   Public Sub Navigate(url)
     Call autoInit()
     classIE.Navigate2 url
@@ -174,32 +190,32 @@ Class EasyIEAutomate
     IsIE = CBool(Right(LCase(obj.FullName), 12) = "iexplore.exe")
   End Function
   
-  Public Function Query(strSelector)
+  Public Function Query(squery)
     Call WaitForLoad()
     On Error Resume Next
     Dim element
-    Set element = classIE.Document.querySelector(strSelector)
+    Set element = classIE.Document.querySelector(squery)
     If Err.Number = 0 Then
       Set Query = element
     Else
-      Call ErrorOut(strSelector, classIE.LocationURL)
+      Call ErrorOut(squery, classIE.LocationURL)
     End If 
   End Function
   
-  Public Function Deeper(strquery)
+  Public Function Deeper(squery)
     Call WaitForLoad()
     On Error Resume Next
     Dim element
-    Set element = classIE.Document.querySelector(strquery)
+    Set element = classIE.Document.querySelector(squery)
     If Err.Number = 0 Then
       Call DeepWaitForLoad(element)
       Set Deeper = element.contentDocument
       If Err.Number = -2147024891 Then
-        MsgBox "ERROR: Deeper(""" & strquery & """)" & vbLf & vbLf & "Same Origin Policy Violated.", vbCritical, "EasyIEAutomate: " & Err.Description
+        MsgBox "ERROR: Deeper(""" & squery & """)" & vbLf & vbLf & "Same Origin Policy Violated.", vbCritical, "EasyIEAutomate: " & Err.Description
         WScript.Quit
       End If
     Else
-      Call ErrorOut(query, classIE.LocationURL)
+      Call ErrorOut(squery, classIE.LocationURL)
     End If 
   End Function   
   
@@ -215,17 +231,13 @@ Class EasyIEAutomate
   
   Private Sub autoInit()
     If classIE Is Nothing Then
-      With CreateObject("WScript.Shell")
-        .PopUp "Auto initialized a new IE object.", 1, "EasyIEAutomate"
-      End With
+      classWSS.PopUp "Auto initialized a new IE object.", 1, "EasyIEAutomate"      
       Set classIE = CreateObject("InternetExplorer.Application")
     End If 
   End Sub 
   
   Private Sub noInitMsg()    
-    With CreateObject("WScript.Shell")
-      .PopUp "Not yet initialized.", 1, "EasyIEAutomate"
-    End With    
+    classWSS.PopUp "Not yet initialized.", 1, "EasyIEAutomate"    
   End Sub
   
 End Class

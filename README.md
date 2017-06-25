@@ -230,24 +230,38 @@ google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 ## eIE.Hide()
 > Sets the visiblilty of the current IE process to false. Same as **eIE.Base.Visible = False**. Alerts if no IE process exists, and then creates one.
 
+## eIE.Center()
+> Centers the window on screen. If no website is loaded one with "about:blank" will be navigated to. A loaded website is necessary to get the screen resolution. 
+```vb
+Set eIE = (New EasyIEAutomate)(vbUseDefault)
+
+' Centering before the browser is visible makes for a nicer looking experience.
+eIE.Center
+eIE.Show
+```
+
 ## eIE.Navigate(url)
+> Navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE"**. Alerts if no IE process exists, and then creates one.  
 > **@params**   
-*url* [string] - Navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE"**. Alerts if no IE process exists, and then creates one.
+*url* [string] - An address url to navigate to.
 
 ## eIE.NavigateTab(url)
+> Creates a new tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 2048**. Alerts if no IE process exists, and then creates one.  
 > **@params**   
-*url* [string] - Creates a new tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 2048**. Alerts if no IE process exists, and then creates one.
+*url* [string] - An address url to navigate to.
 
 ## eIE.NavigateBGTab(url)
+> Creates a new background tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 4096**. Alerts if no IE process exists, and then creates one.  
 > **@params**   
-*url* [string] - Creates a new background tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 4096**. Alerts if no IE process exists, and then creates one.
+*url* [string] - An address url to navigate to. 
 
 ## eIE.WaitForLoad()
 > Waits for the current IE process to finish loading. Alerts if no IE process exists.
 
 ## eIE.DeepWaitForLoad(obj)
+> The method waits for the inputed element to finish loading. The current page could be loaded but content inside of it like an iframe, could still need time to load.  
 > **@params**  
-*obj* [HTMLElement] - Waits for the HTML element to finish loading. The current page could be loaded but content inside of it like an iframe, could still need time to load.
+*obj* [HTMLElement] - An HTML element like an iframe. 
 ```vb
 Set eIE = (New EasyIEAutomate)(vbUseDefault)
 
@@ -265,4 +279,24 @@ eIE.DeepWaitForLoad(myFrame)
 
 ' To access things inside an iframe it must respect the same origin policy!
 MsgBox myFrame.contentDocument.querySelector("img").src, vbOKOnly, "The image source is:"
+```
+There's an easier way however. The next example does the same thing as this one by using a function called **Deeper()**.
+
+## eIE.Deeper(squery)
+> Method waits for element to load and then returns the frame's contentDocument. Alerts and quits the script if same origin policy is violated. Used for accessing/editing things within a frame.  
+> **@params**  
+*squery* [string] - A query string to get the iframe.  
+**@return**  
+[HTMLElement] - The frame element's contentDocument.
+```vb
+Set eIE = (New EasyIEAutomate)(vbUseDefault)
+
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
+
+' Waits for main webpage to load, selects the element, waits for it to load, 
+' and then returns the element's contentDocument. Alerts and quits if same 
+' origin policy is violated.
+Set myFrame = eIE.Deeper("#ice_frame")
+MsgBox myFrame.querySelector("img").src, vbOKOnly, "The image source is:"
 ```

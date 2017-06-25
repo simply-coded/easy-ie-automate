@@ -152,13 +152,10 @@ IEA.Base.Document.title = "Google Searcher"
 @return - an array of available IE processes (windows and tabs).
 ```vb
 Set google = New EasyIEAutomate
-Set youtube = New EasyIEAutomate
 
 For Each ie In google.Avail
   If InStr(ie.LocationURL, "//www.google.com/") Then
-    google(ie)
-  ElseIf InStr(ie.LocationURL, "//www.youtube.com/") Then
-    youtube(ie)
+    google(ie)  
   End If
 Next
 

@@ -62,25 +62,39 @@ Class EasyIEAutomate
   End Property 
   
   Public Property Get Base    
-    Set Base = classIE 
+    If classIE Is Nothing Then 
+      Call noInitMsg()
+    End If
+    Set Base = classIE
   End Property   
   
-  Public Property Get URL
-    Call checkInit()
-    URL = classIE.LocationURL
+  Public Property Get Url
+    If classIE Is Nothing Then
+      Call noInitMsg()
+      Url = ""      
+    Else
+      Url = classIE.LocationURL
+    End If
   End Property
   
   Public Property Get Title
-    Call checkInit()
-    Title = classIE.LocationName
+    If classIE Is Nothing Then
+      Call noInitMsg()
+      Title = ""
+    Else
+      Title = classIE.LocationName
+    End If    
   End Property
   
   '''
   ' SUBS
   '       
   Public Sub Close()
-    Call checkInit()
-    classIE.Quit
+    If classIE Is Nothing Then 
+      Call noInitMsg()      
+    Else
+      classIE.Quit
+    End If      
   End Sub
   
   Public Sub CloseAll()
@@ -91,38 +105,42 @@ Class EasyIEAutomate
   End Sub
   
   Public Sub Show()
-    Call checkInit()
+    Call autoInit()
     classIE.Visible = True
   End Sub
   
   Public Sub Hide()
-    Call checkInit()
+    Call autoInit()
     classIE.Visible = False
   End Sub
   
-  Public Sub Navigate(strURL)
-    Call checkInit()
-    classIE.Navigate2 strURL
+  Public Sub Navigate(url)
+    Call autoInit()
+    classIE.Navigate2 url
   End Sub
   
-  Public Sub NavigateTab(strURL)
-    Call checkInit()
-    classIE.Navigate2 strURL, 2048
+  Public Sub NavigateTab(url)
+    Call autoInit()
+    classIE.Navigate2 url, 2048
   End Sub
   
-  Public Sub NavigateBgTab(strURL)
-    Call checkInit()
-    classIE.Navigate2 strURL, 4096
+  Public Sub NavigateBgTab(url)
+    Call autoInit()
+    classIE.Navigate2 url, 4096
   End Sub
   
   Public Sub WaitForLoad()
-    Call checkInit()
-    While (classIE.Busy) And Not (classIE.ReadyState = 4) : WScript.Sleep(400) : Wend 
+    If classIE Is Nothing Then 
+      Call noInitMsg()      
+    Else
+      While (classIE.Busy) And Not (classIE.ReadyState = 4) : WScript.Sleep(400) : Wend   
+    End If    
   End Sub
   
-  Public Sub DeepWaitForLoad(frame)                
-    While Not (frame.ReadyState = "complete") : WScript.Sleep(400) : Wend        
+  Public Sub DeepWaitForLoad(elem)                
+    While Not (elem.ReadyState = "complete") : WScript.Sleep(400) : Wend        
   End Sub
+  
   
   Public Sub ReBase(obj)
     Init(obj)
@@ -147,7 +165,7 @@ Class EasyIEAutomate
         Exit Sub
       End If
     Next         
-    Call checkInit()
+    Call autoInit()
   End Sub
   
   '''
@@ -192,7 +210,7 @@ Class EasyIEAutomate
     WScript.quit
   End Sub
   
-  Private Sub checkInit()
+  Private Sub autoInit()
     If classIE Is Nothing Then
       With CreateObject("WScript.Shell")
         .PopUp "Auto initialized a new IE object.", 1, "EasyIEAutomate"
@@ -201,4 +219,19 @@ Class EasyIEAutomate
     End If 
   End Sub 
   
+  Private Sub noInitMsg()    
+    With CreateObject("WScript.Shell")
+      .PopUp "Not yet initialized.", 1, "EasyIEAutomate"
+    End With    
+  End Sub
+  
 End Class
+
+Set eie = (New EasyIEAutomate)(vbUseDefault)
+eie.Show
+eie.Navigate "http://html.com/tags/iframe/"
+eie.WaitForLoad
+
+Set firstFrame = eie.Base.Document.querySelector("iframe")
+MsgBox firstFrame.innerHTML
+MsgBox firstFrame.innerHTML

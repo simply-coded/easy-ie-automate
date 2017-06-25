@@ -3,10 +3,10 @@
 ### An automation wrapper class around the InternetExplorer object that makes it easy to control.   
 *( work in progress ) . . .*
 
-##### <p style="text-align:center;color:grey;">[SETUP](#setup) | [USAGE](#usage) | [IE OBJECT](#ie-object) </p>
+##### <p style="text-align:center;color:grey;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods)</p>
 
 # Setup
-> First, let's add the class to our own VBScript file.
+First, let's add the class to our own VBScript file.
 ### 1. Internet connection available.
    ```vb
     With CreateObject("Msxml2.XMLHttp.6.0")
@@ -146,10 +146,11 @@ IEA.Base.Document.title = "Google Searcher"
 > If all of this looks unfamiliar to you then I would recommend checking out all the main properties and methods [here](https://msdn.microsoft.com/en-us/library/aa752084(v=vs.85).aspx).
 
 # Properties
-> Now let's get into some of the new properties added.
+Now let's get into some of the new properties added.
 
-### Avail 
-@return - an array of available IE processes (windows and tabs).
+## eIE.Avail 
+> **@return**  
+[array] - An array of available IE processes (windows and tabs).
 ```vb
 ' EXAMPLE 1:
 Set eIE = New EasyIEAutomate
@@ -181,7 +182,7 @@ Next
 If google.Base Is Nothing Then
   ans = MsgBox("IE with google was not found. Create one?", vbYesNo + vbQuestion)
   If ans = vbYes Then        
-    google(vbUseDefault) ' This creates an IE process
+    google(vbUseDefault) ' This creates a new IE process
     google.Base.Navigate "https://www.google.com/"    
   Else
     WScript.Quit
@@ -203,3 +204,47 @@ WScript.Sleep 2000
 ' This would be a better way to search, but these are just examples.
 google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 ```
+
+## eIE.Base
+> **@return**  
+[object] - The main Internet Explorer object. See [IE object](#ie-object).
+
+## eIE.Url
+> **@return**  
+[string] - The URL of the current IE process. Same as **eIE.Base.LocationURL**. Alerts if no IE process exists.
+
+## eIE.Title
+> **@return**  
+[string] - The title of the current IE process. Same as **eIE.Base.LocationName**. Alerts if no IE process exists.
+
+# Methods
+## eIE.Close()
+> Closes the current IE process. Same as **eIE.Base.Quit**. Alerts if no IE process exists.
+
+## eIE.CloseAll()
+> Closes all open IE processes (hidden or visible).
+
+## eIE.Show()
+> Sets the visiblilty of the current IE process to true. Same as **eIE.Base.Visible = True**. Alerts if no IE process exists, and then creates one.
+
+## eIE.Hide()
+> Sets the visiblilty of the current IE process to false. Same as **eIE.Base.Visible = False**. Alerts if no IE process exists, and then creates one.
+
+## eIE.Navigate(url)
+> **@params**   
+*url* [string] - Navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE"**. Alerts if no IE process exists, and then creates one.
+
+## eIE.NavigateTab(url)
+> **@params**   
+*url* [string] - Creates a new tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 2048**. Alerts if no IE process exists, and then creates one.
+
+## eIE.NavigateBGTab(url)
+> **@params**   
+*url* [string] - Creates a new background tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 4096**. Alerts if no IE process exists, and then creates one.
+
+## eIE.WaitForLoad()
+> Waits for the current IE process to finish loading. Alerts if no IE process exists.
+
+## eIE.DeepWaitForLoad(obj)
+> **@params**  
+*obj* [HTMLElement] - Waits for the HTML element to finish loading. The current page could be loaded but content inside of it like an iframe, could still need time to load.

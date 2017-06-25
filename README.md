@@ -248,3 +248,21 @@ google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 ## eIE.DeepWaitForLoad(obj)
 > **@params**  
 *obj* [HTMLElement] - Waits for the HTML element to finish loading. The current page could be loaded but content inside of it like an iframe, could still need time to load.
+```vb
+Set eIE = (New EasyIEAutomate)(vbUseDefault)
+
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
+
+' Wait for main webpage to load
+eIE.WaitForLoad
+
+' Get an iframe on that page. 
+Set myFrame = eIE.Base.Document.getElementById("ice_frame")
+
+' Wait for iframe to load if it hasn't already.
+eIE.DeepWaitForLoad(myFrame)
+
+' To access things inside an iframe it must respect the same origin policy!
+MsgBox myFrame.contentDocument.querySelector("img").src, vbOKOnly, "The image source is:"
+```

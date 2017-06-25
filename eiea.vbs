@@ -140,8 +140,7 @@ Class EasyIEAutomate
   Public Sub DeepWaitForLoad(elem)                
     While Not (elem.ReadyState = "complete") : WScript.Sleep(400) : Wend        
   End Sub
-  
-  
+    
   Public Sub ReBase(obj)
     Init(obj)
   End Sub
@@ -187,16 +186,20 @@ Class EasyIEAutomate
     End If 
   End Function
   
-  Public Function Deeper(strSelector)
+  Public Function Deeper(strquery)
     Call WaitForLoad()
     On Error Resume Next
     Dim element
-    Set element = classIE.Document.querySelector(strSelector).contentDocument
+    Set element = classIE.Document.querySelector(strquery)
     If Err.Number = 0 Then
       Call DeepWaitForLoad(element)
-      Set Deeper = element.documentElement
+      Set Deeper = element.contentDocument
+      If Err.Number = -2147024891 Then
+        MsgBox "ERROR: Deeper(""" & strquery & """)" & vbLf & vbLf & "Same Origin Policy Violated.", vbCritical, "EasyIEAutomate: " & Err.Description
+        WScript.Quit
+      End If
     Else
-      Call ErrorOut(strSelector, classIE.LocationURL)
+      Call ErrorOut(query, classIE.LocationURL)
     End If 
   End Function   
   
@@ -226,14 +229,3 @@ Class EasyIEAutomate
   End Sub
   
 End Class
-
-' EXAMPLE 1:
-Dim eIE
-Set eIE = New EasyIEAutomate
-
-eIE.ReBase eIE.Avail()(0)
-
-Set wFrame = eIE.Base.Document.getElementById("weather")
-'wFrame.addEventListener "load", GetRef("deepwait")
-
-MsgBox wFrame.contentWindow.document.querySelector("#current_conditions-summary > .myforecast-current-sm").innerText

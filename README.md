@@ -3,7 +3,7 @@
 ### An automation wrapper class around the InternetExplorer object that makes it easy to control.   
 *( work in progress ) . . .*
 
-##### <p style="text-align:center;color:grey;">[SETUP](#setup) | [USAGE](#usage) </p>
+##### <p style="text-align:center;color:grey;">[SETUP](#setup) | [USAGE](#usage) | [IE OBJECT](#ie-object) </p>
 
 # Setup
 > First, let's add the class to our own VBScript file.
@@ -90,13 +90,17 @@ eIE.ReBase objIE
 * Get existing with **RePoint()**.
 ```vb
 Set eIE = New EasyIEAutomate 
-eIE.RePoint("https://www.google.com/?gws_rd=ssl") 'URL of the IE window that is already open.
+
+'URL of the IE window that is already open.
+eIE.RePoint "https://www.google.com/?gws_rd=ssl"
 ```
 
 * Get existing with **Latest()**.
 ```vb
 Set eIE = New EasyIEAutomate 
-eIE.Latest 'Will get the most recent IE process created.
+
+'Will get the most recent IE process created.
+eIE.Latest 
 ```
 
 ## Auto IE Initialization
@@ -105,13 +109,13 @@ eIE.Latest 'Will get the most recent IE process created.
 Set eIE = (New EasyIEAutomate)(Nothing)
 ' Or just: Set eIE = New EasyIEAutomate 
 
-' This and many other methods and properties will trigger an automatic creation of an IE process.
+' This and many other methods and properties will trigger an automatic creation of an IE process if none exist.
 eIE.Show 
 ```
 
-# Backwards compatibility
+# IE Object
 
-> Maybe not the best section title for this, but what I mean by it is that all the IE *properties* and *methods* you're use to can still be accessed through the **Base** Property.
+> All the IE *properties* and *methods* you're use to can still be accessed through the **Base** Property.
 ```vb
 Set IEA = (New EasyIEAutomate)(vbUseDefault)
 
@@ -140,3 +144,32 @@ IEA.Base.Visible = True
 IEA.Base.Document.title = "Google Searcher"
 ```
 > If all of this looks unfamiliar to you then I would recommend checking out all the main properties and methods [here](https://msdn.microsoft.com/en-us/library/aa752084(v=vs.85).aspx).
+
+# Properties
+> Now let's get into some of the new properties added.
+
+### Avail 
+@return - an array of available IE processes (windows and tabs).
+```vb
+Set google = New EasyIEAutomate
+Set youtube = New EasyIEAutomate
+
+For Each ie In google.Avail
+  If InStr(ie.LocationURL, "//www.google.com/") Then
+    google(ie)
+  ElseIf InStr(ie.LocationURL, "//www.youtube.com/") Then
+    youtube(ie)
+  End If
+Next
+
+If google.Base Is Nothing Then
+  ans = MsgBox("IE with Google not found. Create one?", vbYesNo + vbQuestion)
+  If ans = vbYes Then
+    google.Navigate "https://www.google.com/"        
+  Else
+    WScript.Quit
+  End If
+End If
+
+google.Base.Visible = True
+```

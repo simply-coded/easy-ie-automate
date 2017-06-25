@@ -58,8 +58,7 @@ Class EasyIEAutomate
     Avail = list
   End Property 
   
-  Public Property Get Base
-    Call checkInit()
+  Public Property Get Base    
     Set Base = classIE 
   End Property   
   

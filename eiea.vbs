@@ -53,7 +53,7 @@ Class EasyIEAutomate
   Public Property Get Avail
     Dim process, list : list = Array()
     For Each process In classSHELL.Windows
-      If (Right(LCase(process.FullName), 12) = "iexplore.exe") Then 
+      If IsIE(process) Then 
         ReDim Preserve list(UBound(list) + 1)
         Set list(UBound(list)) = process
       End If
@@ -227,11 +227,13 @@ Class EasyIEAutomate
   
 End Class
 
-Set eie = (New EasyIEAutomate)(vbUseDefault)
-eie.Show
-eie.Navigate "http://html.com/tags/iframe/"
-eie.WaitForLoad
+' EXAMPLE 1:
+Dim eIE
+Set eIE = New EasyIEAutomate
 
-Set firstFrame = eie.Base.Document.querySelector("iframe")
-MsgBox firstFrame.innerHTML
-MsgBox firstFrame.innerHTML
+eIE.ReBase eIE.Avail()(0)
+
+Set wFrame = eIE.Base.Document.getElementById("weather")
+'wFrame.addEventListener "load", GetRef("deepwait")
+
+MsgBox wFrame.contentWindow.document.querySelector("#current_conditions-summary > .myforecast-current-sm").innerText

@@ -32,15 +32,18 @@ Class EasyIEAutomate
   '''
   ' CONSTRUCTOR
   '  
-  Public Default Function Init(obj)    
-    If obj Is Nothing Then 'done
-    ElseIf (obj = vbUseDefault) Then
-      Set classIE = CreateObject("InternetExplorer.Application")
-    ElseIf IsObject(obj) Then
-      If IsIE(obj) Then       
+  Public Default Function Init(obj)  
+    If IsObject(obj) Then
+      If obj Is Nothing Then
+        Set classIE = Nothing
+      ElseIf IsIE(obj) Then 
         Set classIE = obj
       End If
-    End If
+    ElseIf IsNumeric(obj) Then
+      If obj = vbUseDefault Then 
+        Set classIE = CreateObject("InternetExplorer.Application")
+      End If    
+    End If  
     Set Init = Me
   End Function 
      
@@ -102,22 +105,22 @@ Class EasyIEAutomate
     classIE.Navigate2 strURL
   End Sub
   
-  Public Sub NavigateT(strURL)
+  Public Sub NavigateTab(strURL)
     Call checkInit()
     classIE.Navigate2 strURL, 2048
   End Sub
   
-  Public Sub NavigateBT(strURL)
+  Public Sub NavigateBgTab(strURL)
     Call checkInit()
     classIE.Navigate2 strURL, 4096
   End Sub
   
-  Public Sub Wait()
+  Public Sub WaitForLoad()
     Call checkInit()
     While (classIE.Busy) And Not (classIE.ReadyState = 4) : WScript.Sleep(400) : Wend 
   End Sub
   
-  Public Sub DeepWait(frame)                
+  Public Sub DeepWaitForLoad(frame)                
     While Not (frame.ReadyState = "complete") : WScript.Sleep(400) : Wend        
   End Sub
   
@@ -155,7 +158,7 @@ Class EasyIEAutomate
   End Function
   
   Public Function Query(strSelector)
-    Call Wait()
+    Call WaitForLoad()
     On Error Resume Next
     Dim element
     Set element = classIE.Document.querySelector(strSelector)
@@ -167,12 +170,12 @@ Class EasyIEAutomate
   End Function
   
   Public Function Deeper(strSelector)
-    Call Wait()
+    Call WaitForLoad()
     On Error Resume Next
     Dim element
     Set element = classIE.Document.querySelector(strSelector).contentDocument
     If Err.Number = 0 Then
-      Call DeepWait(element)
+      Call DeepWaitForLoad(element)
       Set Deeper = element.documentElement
     Else
       Call ErrorOut(strSelector, classIE.LocationURL)

@@ -151,22 +151,55 @@ IEA.Base.Document.title = "Google Searcher"
 ### Avail 
 @return - an array of available IE processes (windows and tabs).
 ```vb
+' EXAMPLE 1:
+Set eIE = New EasyIEAutomate
+
+' Get number of tabs/windows opened.
+count = UBound(eIE.Avail) + 1
+
+' Collect their names & url and show them.
+collect = ""
+For Each ie In eIE.Avail
+  collect = collect & ie.LocationName & " - " & ie.LocationURL & vbLF  
+Next
+
+MsgBox collect, vbOKOnly, "IE object(s) open = " & count
+```
+
+```vb
+' EXAMPLE 2
 Set google = New EasyIEAutomate
 
+' Search for a tab/window using google
 For Each ie In google.Avail
-  If InStr(ie.LocationURL, "//www.google.com/") Then
-    google(ie)  
+  If InStr(ie.LocationURL, "google.com/") Then
+    google(ie)
+    Exit For
   End If
 Next
 
 If google.Base Is Nothing Then
-  ans = MsgBox("IE with Google not found. Create one?", vbYesNo + vbQuestion)
-  If ans = vbYes Then
-    google.Navigate "https://www.google.com/"        
+  ans = MsgBox("IE with google was not found. Create one?", vbYesNo + vbQuestion)
+  If ans = vbYes Then        
+    google(vbUseDefault) ' This creates an IE process
+    google.Base.Navigate "https://www.google.com/"    
   Else
     WScript.Quit
   End If
 End If
 
+' Show the window if it was hidden or a new one was created.
 google.Base.Visible = True
+
+' Wait for it to load before trying to mess with it
+While google.Base.Busy : WScript.Sleep 400 : Wend
+    
+' Search for something in google.
+google.Base.Document.getElementById("lst-ib").Value = "searching in google"
+google.Base.Document.getElementById("tsf").Submit
+
+WScript.Sleep 2000
+
+' This would be a better way to search, but these are just examples.
+google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 ```

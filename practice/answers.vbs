@@ -2,44 +2,43 @@
 Execute(CreateObject("Scripting.FileSystemObject").OpenTextFile("eiea.vbs", 1).ReadAll)
 
 'Create an instance of the class
-Dim IEA : Set IEA = (New EasyIEAutomate)(Null)
+Dim eIE : Set eIE = (New EasyIEAutomate)(vbUseDefault)
 
 'Practice HTML page
-IEA.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
-IEA.Base.Visible = True
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
 
 'Input in data
 '----(1) Task--------------------------------
-IEA.Query("#user").Value = "Jeremy"
-IEA.Query("input[name='email']").Value = "simplycoded.help@gmail.com"
-IEA.Query("#pass").Value = "bananas1are2the3universal4scale5"
+eIE.Query("#user").Value = "Jeremy"
+eIE.Query("input[name='email']").Value = "simplycoded.help@gmail.com"
+eIE.Query("#pass").Value = "bananas1are2the3universal4scale5"
 
 '----(2) Task--------------------------------
-IEA.Query("#milk").removeAttribute("checked")
-IEA.Query("#sugar").setAttribute("checked")
-IEA.Query("#lemon").setAttribute("checked")
-IEA.Query("input[type='radio'][value='female']").setAttribute("checked")
+eIE.Query("#milk").removeAttribute("checked")
+eIE.Query("#sugar").setAttribute("checked")
+eIE.Query("#lemon").setAttribute("checked")
+eIE.Query("input[type='radio'][value='female']").setAttribute("checked")
 
 '----(3) Task--------------------------------
-IEA.Query("form > p > button").Click
+eIE.Query("form > p > button").Click
 
 '----(4) Task--------------------------------
-Set iframe = IEA.Deeper("#ice_frame")
+Set iframe = eIE.Deeper("#ice_frame")
 
-With iframe.querySelector("select")
-    For i = 0 To .options.length - 1
-        If .options(i).value = "mint" Then
-            .options(i).selected = true
-        Else
-            .options(i).selected = false
-        End If
-    Next
-End With
+Set selectElement = iframe.querySelector("select")
+For i = 0 To selectElement.options.length - 1
+    If selectElement.options(i).value = "mint" Then
+        selectElement.options(i).selected = true
+    Else
+        selectElement.options(i).selected = false
+    End If
+Next
 
 iframe.querySelector("input[type='submit']").Click
 
 '----(5) Task--------------------------------
-IEA.Query("a[href='./more.html']").Click
-IEA.RePoint("https://rawgit.com/simply-coded/easy-ie-automate/master/practice/more.html")
-IEA.Query("textarea").Value = "I am allergic to butterflies."
-IEA.Query("form input").Click
+eIE.Query("a[href='./more.html']").Click
+eIE.RePoint("https://rawgit.com/simply-coded/easy-ie-automate/master/practice/more.html")
+eIE.Query("textarea").Value = "I am allergic to butterflies."
+eIE.Query("form input").Click

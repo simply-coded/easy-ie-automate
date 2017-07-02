@@ -2,11 +2,11 @@
 Execute(CreateObject("Scripting.FileSystemObject").OpenTextFile("eiea.vbs", 1).ReadAll)
 
 'Create an instance of the class
-Dim IEA : Set IEA = (New EasyIEAutomate)(Null)
+Dim eIE : Set eIE = New EasyIEAutomate
 
 'Practice HTML page
-IEA.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
-IEA.Base.Visible = True
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
 
 'Challenges: One of multiple ways to do this can be found in answers.vbs
 

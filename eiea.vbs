@@ -1,14 +1,9 @@
 '''
-' @author Jeremy England
-' @company SimplyCoded
-' @date 06/24/2017
-' @description
-'  Makes automating Internet Explorer easier.
-'
+'@desc
+' Makes automating Internet Explorer easier.
+'@author 
+' Jeremy England (SimplyCoded)
 
-'''
-' INTERNET EXPLORER AUTOMATION CLASS
-'
 Class EasyIEAutomate
   '''
   ' OBJECTS
@@ -90,7 +85,7 @@ Class EasyIEAutomate
   End Property
   
   '''
-  ' SUBS
+  ' METHODS
   '       
   Public Sub Close()
     If classIE Is Nothing Then 
@@ -157,14 +152,14 @@ Class EasyIEAutomate
     While Not (elem.ReadyState = "complete") : WScript.Sleep(400) : Wend        
   End Sub
     
-  Public Sub ReBase(obj)
-    Init(obj)
+  Public Sub ReBase(ie)
+    Init(ie)
   End Sub
   
-  Public Sub RePoint(strURL)  
+  Public Sub RePoint(url)  
     Dim window
     For Each window in classSHELL.Windows            
-      If IsIE(window) And (LCase(window.LocationURL) = LCase(strURL)) Then             
+      If IsIE(window) And (LCase(window.LocationURL) = LCase(url)) Then             
         Set classIE = window
         Exit Sub
       End If
@@ -182,10 +177,7 @@ Class EasyIEAutomate
     Next         
     Call autoInit()
   End Sub
-  
-  '''
-  ' FUNCTIONS
-  '  
+    
   Private Function IsIE(obj)    
     IsIE = CBool(Right(LCase(obj.FullName), 12) = "iexplore.exe")
   End Function
@@ -241,3 +233,5 @@ Class EasyIEAutomate
   End Sub
   
 End Class
+
+

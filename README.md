@@ -218,19 +218,20 @@ google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 [string] - The title of the current IE process. Same as **eIE.Base.LocationName**. Alerts if no IE process exists.
 
 # Methods
-## eIE.Close()
+
+## eIE.Close( )
 > Closes the current IE process. Same as **eIE.Base.Quit**. Alerts if no IE process exists.
 
-## eIE.CloseAll()
+## eIE.CloseAll( )
 > Closes all open IE processes (hidden or visible).
 
-## eIE.Show()
+## eIE.Show( )
 > Sets the visiblilty of the current IE process to true. Same as **eIE.Base.Visible = True**. Alerts if no IE process exists, and then creates one.
 
-## eIE.Hide()
+## eIE.Hide( )
 > Sets the visiblilty of the current IE process to false. Same as **eIE.Base.Visible = False**. Alerts if no IE process exists, and then creates one.
 
-## eIE.Center()
+## eIE.Center( )
 > Centers the window on screen. If no website is loaded one with "about:blank" will be navigated to. A loaded website is necessary to get the screen resolution. 
 ```vb
 Set eIE = (New EasyIEAutomate)(vbUseDefault)
@@ -240,28 +241,28 @@ eIE.Center
 eIE.Show
 ```
 
-## eIE.Navigate(url)
+## eIE.Navigate( url )
 > Navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE"**. Alerts if no IE process exists, and then creates one.  
 > **@params**   
 *url* [string] - An address url to navigate to.
 
-## eIE.NavigateTab(url)
+## eIE.NavigateTab( url )
 > Creates a new tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 2048**. Alerts if no IE process exists, and then creates one.  
 > **@params**   
 *url* [string] - An address url to navigate to.
 
-## eIE.NavigateBGTab(url)
+## eIE.NavigateBgTab( url )
 > Creates a new background tab and navigates the IE process to this location. Same as **eIE.Base.Navigate2 "URL_HERE", 4096**. Alerts if no IE process exists, and then creates one.  
 > **@params**   
 *url* [string] - An address url to navigate to. 
 
-## eIE.WaitForLoad()
+## eIE.WaitForLoad( )
 > Waits for the current IE process to finish loading. Alerts if no IE process exists.
 
-## eIE.DeepWaitForLoad(obj)
+## eIE.DeepWaitForLoad( elem )
 > The method waits for the inputed element to finish loading. The current page could be loaded but content inside of it like an iframe, could still need time to load.  
 > **@params**  
-*obj* [HTMLElement] - An HTML element like an iframe. 
+*elem* [object] - An HTML element object like an iframe. 
 ```vb
 Set eIE = (New EasyIEAutomate)(vbUseDefault)
 
@@ -282,12 +283,12 @@ MsgBox myFrame.contentDocument.querySelector("img").src, vbOKOnly, "The image so
 ```
 There's an easier way however. The next example does the same thing as this one by using a function called **Deeper()**.
 
-## eIE.Deeper(squery)
+## eIE.Deeper( squery )
 > Method waits for element to load and then returns the frame's contentDocument. Alerts and quits the script if same origin policy is violated. Used for accessing/editing things within a frame.  
 > **@params**  
 *squery* [string] - A query string to get the iframe.  
 **@return**  
-[HTMLElement] - The frame element's contentDocument.
+[HTMLElement] - The frame element's contentDocument as an object.
 ```vb
 Set eIE = (New EasyIEAutomate)(vbUseDefault)
 
@@ -299,4 +300,37 @@ eIE.Show
 ' origin policy is violated.
 Set myFrame = eIE.Deeper("#ice_frame")
 MsgBox myFrame.querySelector("img").src, vbOKOnly, "The image source is:"
+```
+
+## eIE.ReBase( ie )
+> Changes the Base to a different Internet Explorer object. Alias for the default Init() method. An example can be found in the [usage](#usage) section.  
+**@params**  
+*ie* [object] - The Internet Explorer window/tab object you want to change the Base object to. 
+
+## eIE.RePoint( url )
+> Changes the Base to a different Internet Explorer object. An example can be found in the [usage](#usage) section.  
+**@params**    
+*url* [string] - An url of an Internet Explorer window/tab that is currently opened that you want to change the Base object to. 
+
+## eIE.Latest( )
+> Changes the Base to the most recent Internet Explorer object. An example can be found in the [usage](#usage) section.  
+
+## eIE.Query( squery )
+> Uses *eIE.Base.Document.querySelector( squery )* to retrieve an element. [Here](https://developer.mozilla.org/en-US/docs/Web/API/Element/querySelector) is documentation on Element.querySelector(). [Here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) are the various ways to search for elements. Waits for document to load before searching, and alerts and quits if it cannot be found.   
+**@params**    
+*squery* [string] - The query string to select the element with.   
+**@return**  
+[HTMLElement] - The found element as an object. 
+```vb
+Set eIE = (New EasyIEAutomate)(vbUseDefault)
+
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
+
+eIE.Query(".titles").style.color = "deepskyblue"
+eIE.Query("input[name='email']").Value = "simplycoded.help@gmail.com"
+eIE.Query("#pass").Value = "bananas1are2the3universal4scale5"
+eIE.Query("#milk").removeAttribute("checked")
+eIE.Query("input[type='radio'][value='female']").setAttribute("checked")
+eIE.Query("form > p > button").Click
 ```

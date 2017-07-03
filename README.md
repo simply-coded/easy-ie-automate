@@ -1,5 +1,5 @@
 # EasyIEAutomate *(object)*
-An automation wrapper class around the InternetExplorer object that makes it easy to control in VBScript.   
+An automation wrapper class around the InternetExplorer object that makes it easy to control with VBScript.
 
 <p align="center">
   <b><a href="#setup">SETUP</a></b> | 

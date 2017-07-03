@@ -12,7 +12,7 @@ eIE.Show
 '----(1) Task--------------------------------
 eIE.Query("#user").Value = "Jeremy"
 eIE.Query("input[name='email']").Value = "simplycoded.help@gmail.com"
-eIE.Query("#pass").Value = "bananas1are2the3universal4scale5"
+eIE.Query("#pass").Value = "bananas_are_the_universal_scale"
 
 '----(2) Task--------------------------------
 eIE.Query("#milk").removeAttribute("checked")

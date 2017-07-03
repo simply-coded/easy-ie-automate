@@ -194,6 +194,18 @@ Class EasyIEAutomate
     End If 
   End Function
   
+  Public Function QueryAll(squery)
+    Call WaitForLoad()
+    On Error Resume Next
+    Dim elements
+    Set elements = classIE.Document.querySelectorAll(squery)
+    If Err.Number = 0 Then
+      Set QueryAll = elements
+    Else
+      Call ErrorOut(squery, classIE.LocationURL)
+    End If 
+  End Function
+  
   Public Function Deeper(squery)
     Call WaitForLoad()
     On Error Resume Next
@@ -234,4 +246,14 @@ Class EasyIEAutomate
   
 End Class
 
+Set eIE = (New EasyIEAutomate)(vbUseDefault)
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
 
+Set headers = eIE.QueryAll(".titles, p")
+
+For i = 0 To headers.length - 1
+  headers.item(i).style.backgroundColor = "white"  
+  headers.item(i).style.border = "2px solid deepskyblue"  
+  headers.item(i).style.fontFamily = "Consolas, monospace"
+Next

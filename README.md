@@ -288,7 +288,7 @@ There's an easier way however. The next example does the same thing as this one 
 > **@params**  
 *squery* [string] - A query string to get the iframe.  
 **@return**  
-[HTMLElement] - The frame element's contentDocument as an object.
+[object] - The frame element's contentDocument as an object.
 ```vb
 Set eIE = (New EasyIEAutomate)(vbUseDefault)
 
@@ -320,17 +320,40 @@ MsgBox myFrame.querySelector("img").src, vbOKOnly, "The image source is:"
 **@params**    
 *squery* [string] - The query string to select the element with.   
 **@return**  
-[HTMLElement] - The found element as an object. 
+[object] - The found element as an object. 
 ```vb
 Set eIE = (New EasyIEAutomate)(vbUseDefault)
 
 eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
 eIE.Show
 
+' get various elements and interact with them
 eIE.Query(".titles").style.color = "deepskyblue"
 eIE.Query("input[name='email']").Value = "simplycoded.help@gmail.com"
-eIE.Query("#pass").Value = "bananas1are2the3universal4scale5"
+eIE.Query("#pass").Value = "bananas_are_the_universal_scale"
 eIE.Query("#milk").removeAttribute("checked")
 eIE.Query("input[type='radio'][value='female']").setAttribute("checked")
 eIE.Query("form > p > button").Click
+```
+
+## eIE.QueryAll( squery )
+> Uses *eIE.Base.Document.querySelectorAll( squery )* to retrieve a NodeList. [Here](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors) are the various ways to search for elements. Waits for document to load before searching, and alerts and quits if something cannot be found.   
+**@params**    
+*squery* [string] - The query string to select the elements with.   
+**@return**  
+[object] - The found elements as a NodeList object. 
+```vb
+Set eIE = (New EasyIEAutomate)(vbUseDefault)
+eIE.Navigate "https://rawgit.com/simply-coded/easy-ie-automate/master/practice/index.html"
+eIE.Show
+
+' get elements with class="titles" and all <p> tag elements
+Set list = eIE.QueryAll(".titles, p")
+
+' change their style up a bit
+For i = 0 To list.length - 1
+  list.item(i).style.backgroundColor = "white"  
+  list.item(i).style.border = "2px solid deepskyblue"  
+  list.item(i).style.fontFamily = "Consolas, monospace"
+Next
 ```

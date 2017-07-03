@@ -1,9 +1,8 @@
 # EasyIEAutomate *(object)*
 
 ### An automation wrapper class around the InternetExplorer object that makes it easy to control.   
-*( work in progress ) . . .*
 
-##### <p style="text-align:center;color:grey;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods)</p>
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
 
 # Setup
 First, let's add the class to our own VBScript file.
@@ -39,6 +38,8 @@ First, let's add the class to our own VBScript file.
 
     'your code here...
     ```
+
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
 
 # Usage
 > Now that we've added the class to our VBScript file, let's create an instance of it.  
@@ -113,6 +114,8 @@ Set eIE = (New EasyIEAutomate)(Nothing)
 eIE.Show 
 ```
 
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+
 # IE Object
 
 > All the IE *properties* and *methods* you're use to can still be accessed through the **Base** Property.
@@ -144,6 +147,8 @@ IEA.Base.Visible = True
 IEA.Base.Document.title = "Google Searcher"
 ```
 > If all of this looks unfamiliar to you then I would recommend checking out all the main properties and methods [here](https://msdn.microsoft.com/en-us/library/aa752084(v=vs.85).aspx).
+
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
 
 # Properties
 Now let's get into some of the new properties added.
@@ -215,7 +220,9 @@ google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 
 ## eIE.Title
 > **@return**  
-[string] - The title of the current IE process. Same as **eIE.Base.LocationName**. Alerts if no IE process exists.
+[string] - The title of the current IE process. Same as **eIE.Base.LocationName**. Alerts if no IE process exists.  
+
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
 
 # Methods
 
@@ -357,3 +364,23 @@ For i = 0 To list.length - 1
   list.item(i).style.fontFamily = "Consolas, monospace"
 Next
 ```
+
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+
+# History
+* 1.1
+  * `ADD` - Documentation added to *README.md*.
+  * `CHANGE` - Methods renamed as follows: **NavigateT()** to **NavigateTab()**, and **NavigateBT()** to **NavigateBgTab()**.
+  * `CHANGE` - **ReBase()** now an alias for Default **Init()** method.
+  * `ADD` - Timed popups for errors not worth quitting over. See documentation for what methods alert.
+  * `CHANGE` - Practice folder examples have changed in *challenge.vbs* and *answers.vbs* to reflect newest syntax.
+* 1.0
+  * `ADD` - Initial release.
+
+#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta)
+</p>
+
+# Meta
+Jeremy England ( SimplyCoded ) - [simplycoded.help@gmail.com](mailto:simplycoded.help@gmail.com)
+
+Distributed under the MIT license. See [`LICENSE`](https://spdx.org/licenses/MIT.html) for more information.

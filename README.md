@@ -2,7 +2,15 @@
 
 ### An automation wrapper class around the InternetExplorer object that makes it easy to control.   
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
+</p>
 
 # Setup
 First, let's add the class to our own VBScript file.
@@ -39,7 +47,15 @@ First, let's add the class to our own VBScript file.
     'your code here...
     ```
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
+</p>
 
 # Usage
 > Now that we've added the class to our VBScript file, let's create an instance of it.  
@@ -114,7 +130,15 @@ Set eIE = (New EasyIEAutomate)(Nothing)
 eIE.Show 
 ```
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
+</p>
 
 # IE Object
 
@@ -148,7 +172,15 @@ IEA.Base.Document.title = "Google Searcher"
 ```
 > If all of this looks unfamiliar to you then I would recommend checking out all the main properties and methods [here](https://msdn.microsoft.com/en-us/library/aa752084(v=vs.85).aspx).
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
+</p>
 
 # Properties
 Now let's get into some of the new properties added.
@@ -222,7 +254,15 @@ google.Base.Navigate "https://www.google.com/#q=alternative+search+in+google"
 > **@return**  
 [string] - The title of the current IE process. Same as **eIE.Base.LocationName**. Alerts if no IE process exists.  
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
+</p>
 
 # Methods
 
@@ -365,7 +405,15 @@ For i = 0 To list.length - 1
 Next
 ```
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta) </p>
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
+</p>
 
 # History
 * 1.1
@@ -377,7 +425,14 @@ Next
 * 1.0
   * `ADD` - Initial release.
 
-#### <p style="text-align:center;color:grey;width:100%;">[SETUP](#setup) | [USAGE](#usage) | [IE-OBJECT](#ie-object) | [PROPERTIES](#properties) | [METHODS](#methods) | [HISTORY](#history) | [CONTACT](#meta)
+<p align="center">
+  <b><a href="#setup">SETUP</a></b> | 
+  <b><a href="#usage">USAGE</a></b> | 
+  <b><a href="#ie-object">IE-OBJECT</a></b> | 
+  <b><a href="#properties">PROPERTIES</a></b> | 
+  <b><a href="#methods">METHODS</a></b> | 
+  <b><a href="#history">HISTORY</a></b> | 
+  <b><a href="#meta">CONTACT</a></b>
 </p>
 
 # Meta

@@ -1,9 +1,3 @@
-'''
-'@desc
-' Makes automating Internet Explorer easier.
-'@author 
-' Jeremy England (SimplyCoded)
-
 Class EasyIEAutomate
   '''
   ' OBJECTS
